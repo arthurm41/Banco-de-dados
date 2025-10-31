@@ -1,16 +1,20 @@
 <?php
+$nome = $_POST["nome"];
+$email = $_POST["email"];
 
-    $servername = "localhost"; 
-    $username   = "root";      
-    $password   = "senaisp";          
-    $dbname     = "transporte_sa";  
+$conn = new mysqli("localhost","root","senaisp","livraria");
 
-    $conn = new mysqli($localhost, $root, $senaisp, $transporte_sa);
+if ($conn->connect_error) {
+    die("Erro de conexão". $conn->connect_error);
+}
 
-    if ($conn->connect_error) {
-        die("Falha na conexão: " . $conn->connect_error);
-    } else {
-        echo "Conexão feita com sucesso!";
-    }
-
+$sql = "INSERT INTO usuarios (nome, email) VALUES ('$nome', '$email')";
+if ($conn->query($sql) === TRUE) {
+    echo "Dados salvos com sucesso!";
+} else {
+    echo "Erro: " . $conn->error;
+}
+header("Location: index.html");
+exit;
+$conn ->close();
 ?>
